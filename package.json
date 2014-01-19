@@ -1,0 +1,17 @@
+{
+	"dependencies" : {
+		"sdl2-ffi": {
+			// Lua sdl ffi binding
+			"repo": "https://github.com/torch/sdl2-ffi.git",
+			"createLink": "lib/sdl2"
+		},
+		"sdl": {
+			// SDL library
+			"type": "hg",
+			"repo":	"http://hg.libsdl.org/SDL",
+			"createLink":{
+				"local/lib/libSDL2.dylib" : "lib/libSDL2.dylib"
+			}
+		}
+	}
+}
