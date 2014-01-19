@@ -1,0 +1,15 @@
+#! /bin/bash
+###############################################################################
+# setupDevEnv
+#
+# Run this script to setup and install all the misc utilities needed for
+# development.
+#
+# Usually, this kind of stuff should go into the rake file. But the rake file
+# itself requires a few gems for it to run. We deal with that here.
+#
+###############################################################################
+gem install colorize
+gem install json
+rake setup
+
