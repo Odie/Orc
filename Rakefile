@@ -5,8 +5,7 @@ require 'pathname'
 
 task :default => [:setup]
 
-#task :setup => [:getSource, :buildSource, :setupLinks]
-task :setup => [ :buildSource, :setupLinks]
+task :setup => [:getSource, :buildSource, :setupLinks]
 
 # Answers true if the directory did not exist and had to be created
 def ensureDirExists(path)
