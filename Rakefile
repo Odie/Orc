@@ -163,6 +163,8 @@ task :setupLinks do
 			linkSpec.each do |source, target|
 				linkSource = pkgDir + source
 				linkTarget = rakeDir + target
+				next if linkTarget.exist?
+
 				relativeSymlink(linkSource, linkTarget)
 			end
 		end
