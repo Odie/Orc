@@ -173,3 +173,20 @@ task :setupLinks do
 	puts("Done setting up links".green)
 end
 
+
+def generateLuaFFIDef(headerName, includeDir, outputFilename)
+	cmd = "echo '#include <#{headerName}>' | gcc -I #{includeDir} -E -xc - | grep -v '^#' | sed -e '/^$/d' > #{outputFilename}"
+	`#{cmd}`
+end
+
+task :ffi do
+	defs = [
+		["sdl.h", "vendor/SDL/local/include/SDL2", "src/ffi/sdl.cdef"],
+		["gl3.h", "/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers", "src/ffi/OpenGL.cdef"]
+	]
+
+	defs.each do |headerName, includeDir, outputFilename|
+		FileUtils.mkdir_p(File.dirname(outputFilename))
+		generateLuaFFIDef(headerName, includeDir, outputFilename)
+	end
+end
