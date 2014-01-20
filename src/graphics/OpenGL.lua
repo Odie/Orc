@@ -536,6 +536,8 @@ enum {
  GL_COLOR_ARRAY_POINTER            = 0x8090,
  GL_INDEX_ARRAY_POINTER            = 0x8091,
  GL_TEXTURE_COORD_ARRAY_POINTER    = 0x8092,
+ GL_MAJOR_VERSION                  = 0x821B,
+ GL_MINOR_VERSION                  = 0x821C,
  GL_EDGE_FLAG_ARRAY_POINTER        = 0x8093,
  GL_V2F                            = 0x2A20,
  GL_V3F                            = 0x2A21,
