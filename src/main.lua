@@ -1,6 +1,7 @@
 require 'bootstrap'
-
-local sdl = require("sdl2")
+local gl = require 'graphics.OpenGL'
+local sdl = require 'sdl2'
+local ffi = require 'ffi'
 
 if sdl == nil then
 	print("[SDL] ffi could not be loaded")
@@ -19,32 +20,18 @@ if win == nil then
 	return
 end
 
-local ren = sdl.createRenderer(win, -1, sdl.RENDERER_ACCELERATED + sdl.RENDERER_PRESENTVSYNC);
-if ren == nil then
-	print("[SDL] could not create renderer")
+glContext = sdl.gL_CreateContext(win)
+if glContext == nil then
+	print("[SDL] could not create opengl context");
 	return
 end
 
-local bmp = sdl.loadBMP(assetDir .. "smiley.bmp")
-if bmp == nil then
-	print("[SDL] could not load bitmap")
-	return
-end
+-- now you can make GL calls.
+gl.glClearColor(255, 255, 255,1)
+gl.glClear(gl.GL_COLOR_BUFFER_BIT)
+sdl.gL_SwapWindow(win)
 
-local tex = sdl.createTextureFromSurface(ren, bmp);
-sdl.freeSurface(bmp);
-if tex == nil then
-	print("[SDL] could not create texture from surface")
-	return
-end
-
-sdl.renderClear(ren);
-sdl.renderCopy(ren, tex, nil, nil);
-sdl.renderPresent(ren);
-
-sdl.delay(3*1000);
-
-sdl.destroyTexture(tex);
-sdl.destroyRenderer(ren);
+-- Once finished with OpenGL functions, the SDL_GLContext can be deleted.
+sdl.gL_DeleteContext(glContext)
 sdl.destroyWindow(win);
 sdl.quit();
