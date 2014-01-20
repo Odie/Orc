@@ -3,6 +3,9 @@ local gl = require 'graphics.OpenGL'
 local sdl = require 'sdl2'
 local ffi = require 'ffi'
 
+-------------------------------------------------------------------------------
+-- Initialize GL
+-------------------------------------------------------------------------------
 if sdl == nil then
 	print("[SDL] ffi could not be loaded")
 	return
@@ -34,7 +37,9 @@ if glContext == nil then
 	return
 end
 
--- Report the openGL version
+-------------------------------------------------------------------------------
+-- Report openGL version
+-------------------------------------------------------------------------------
 majorVersion = ffi.new("GLint[1]")
 minorVersion = ffi.new("GLint[1]")
 gl.glGetIntegerv(gl.GL_MAJOR_VERSION, majorVersion);
@@ -45,14 +50,18 @@ version = gl.glGetString(gl.GL_VERSION)
 version = ffi.string(version)
 print(version)
 
--- now you can make GL calls.
+-------------------------------------------------------------------------------
+-- Do some stuff
+-------------------------------------------------------------------------------
 gl.glClearColor(255, 255, 255,1)
 gl.glClear(gl.GL_COLOR_BUFFER_BIT)
 sdl.gL_SwapWindow(win)
 
 sdl.delay(3*1000);
 
--- Once finished with OpenGL functions, the SDL_GLContext can be deleted.
+-------------------------------------------------------------------------------
+-- Cleanup
+-------------------------------------------------------------------------------
 sdl.gL_DeleteContext(glContext)
 sdl.destroyWindow(win);
 sdl.quit();
