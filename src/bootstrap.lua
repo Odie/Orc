@@ -1,4 +1,9 @@
-package.path = "./lib/?.lua;./lib/?/init.lua;" .. package.path
+-- Setup package path to be able to locate any external libraries
+package.path = "../lib/?.lua;../lib/?/init.lua;" .. package.path
+
+assetDir = "../assets/"
+
+
 
 -- string.split
 -- Splits a string using the given deliminater
@@ -21,12 +26,14 @@ function string.split(text, delimiter)
 	return list
 end
 
+
+
 -- ffi.load override
 -- The default ffi.load loads from a specific path.
 -- We'd like it to search through a list of configurable locations.
 local ffi = require("ffi")
 
-ffi.searchPath = "./lib;"
+ffi.searchPath = "../lib;"
 local ffiLoad = ffi.load
 ffi.load = function(libName)
 	local paths = string.split(ffi.searchPath, ';')
@@ -55,52 +62,3 @@ ffi.load = function(libName)
 		end
 	end
 end
-
-local sdl = require("sdl2")
-
-if sdl == nil then
-	print("[SDL] ffi could not be loaded")
-	return
-end
-
-local initResult = sdl.init(sdl.INIT_EVERYTHING)
-if initResult == -1 then
-	print("[SDL] initialization failed")
-	return
-end
-
-local win = sdl.createWindow("Hello World!", 100, 100, 640, 480, sdl.WINDOW_SHOWN);
-if win == nil then
-	print("[SDL] create window failed")
-	return
-end
-
-local ren = sdl.createRenderer(win, -1, sdl.RENDERER_ACCELERATED + sdl.RENDERER_PRESENTVSYNC);
-if ren == nil then
-	print("[SDL] could not create renderer")
-	return
-end
-
-local bmp = sdl.loadBMP("assets/smiley.bmp")
-if bmp == nil then
-	print("[SDL] could not load bitmap")
-	return
-end
-
-local tex = sdl.createTextureFromSurface(ren, bmp);
-sdl.freeSurface(bmp);
-if tex == nil then
-	print("[SDL] could not create texture from surface")
-	return
-end
-
-sdl.renderClear(ren);
-sdl.renderCopy(ren, tex, nil, nil);
-sdl.renderPresent(ren);
-
-sdl.delay(3*1000);
-
-sdl.destroyTexture(tex);
-sdl.destroyRenderer(ren);
-sdl.destroyWindow(win);
-sdl.quit();
