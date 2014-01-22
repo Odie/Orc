@@ -1,5 +1,8 @@
 {
 	"dependencies" : {
+		"luajit": {
+			"repo": "http://luajit.org/git/luajit-2.0.git"
+		},
 		"sdl2-ffi": {
 			// Lua sdl ffi binding
 			"repo": "https://github.com/torch/sdl2-ffi.git",
