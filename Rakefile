@@ -67,7 +67,7 @@ task :getSource do
 
 		# Clone the repo if the directory does not exist
 		if !File.directory?(name)
-			cmd = "#{repoType} clone #{repoUrl}"
+			cmd = "#{repoType} clone #{repoUrl} #{name}"
 			print("Downloading dependecy...".ljust(30).green)
 			puts(name)
 			puts(cmd)
