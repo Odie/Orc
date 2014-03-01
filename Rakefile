@@ -3,9 +3,9 @@ require 'json'
 require 'colorize'
 require 'pathname'
 
-task :default => [:setup]
+task :default => [:build]
 
-task :setup => [:getSource, :buildSource, :setupLinks]
+task :setup => [:getSource, :setupLinks]
 
 # Answers true if the directory did not exist and had to be created
 def ensureDirExists(path)
@@ -95,26 +95,6 @@ task :getSource do
 	puts("Done getting source".green)
 end
 
-################################################################################
-#	Source Building Phase
-################################################################################
-sdlDyLib = "vendor/SDL/local/lib/libSDL2.dylib"
-
-file sdlDyLib do
-	# Build SDL
-	sdlDir = vendorDir + "SDL"
-	sdlBuildDir = vendorDir + "SDL/local"
-	ensureDirExists(sdlBuildDir)
-
-	Dir.chdir(sdlDir)
-	executeShellCommand("./configure --prefix=#{sdlBuildDir}")
-	executeShellCommand("make && make install")
-end
-
-task :buildSource => [sdlDyLib] do
-	Dir.chdir(rakeDir)
-	puts("Done building source".green)
-end
 
 ################################################################################
 #	Link Building Phase
@@ -189,4 +169,16 @@ task :ffi do
 		FileUtils.mkdir_p(File.dirname(outputFilename))
 		generateLuaFFIDef(headerName, includeDir, outputFilename)
 	end
+end
+
+################################################################################
+#	Source Building
+#   Build the project and dependencies. We'll rely on cmake.
+################################################################################
+task :build do
+	buildDir = "build"
+	ensureDirExists(buildDir)
+	Dir.chdir(buildDir)
+	executeShellCommand("cmake ..")
+	executeShellCommand("make")
 end

@@ -11,10 +11,7 @@
 		"sdl": {
 			// SDL library
 			"type": "hg",
-			"repo":	"http://hg.libsdl.org/SDL",
-			"createLink":{
-				"local/lib/libSDL2.dylib" : "lib/libSDL2.dylib"
-			}
+			"repo":	"http://hg.libsdl.org/SDL"
 		}
 	}
 }

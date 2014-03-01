@@ -35,13 +35,19 @@ include_directories(${install_dir}/include/luajit-2.0)
 ###############################################################################
 # SDL
 ###############################################################################
-# Specify where SDL is
-include_directories("vendor/SDL/local/include/SDL2")
-find_library(SDL_LIB SDL2 HINTS "vendor/SDL/local/lib")
+add_subdirectory("vendor/SDL")
+set(SDL_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/vendor/sdl)
+include_directories(${SDL_ROOT}/include)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/vendor/sdl)
+
+###############################################################################
+# Orc
+###############################################################################
+find_package(OpenGL REQUIRED)
 
 # Build the orc executable using the found source files
 add_executable(orc ${SOURCES})
 
 # Link orc against the SDL library
-target_link_libraries(orc ${SDL_LIB})
+target_link_libraries(orc SDL2 ${OPENGL_LIBRARIES})
 
