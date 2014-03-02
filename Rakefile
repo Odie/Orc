@@ -4,8 +4,8 @@ require 'colorize'
 require 'pathname'
 
 task :default => [:build]
-
-task :setup => [:getSource, :setupLinks]
+task :update => [:getSource, :setupLinks]
+task :setup => [:update]
 
 # Answers true if the directory did not exist and had to be created
 def ensureDirExists(path)
