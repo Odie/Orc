@@ -12,6 +12,9 @@
 			// SDL library
 			"type": "hg",
 			"repo":	"http://hg.libsdl.org/SDL"
+		},
+		"glm": {
+			"repo": "https://github.com/g-truc/glm.git"
 		}
 	}
 }

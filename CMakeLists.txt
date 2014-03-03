@@ -7,6 +7,9 @@ if (SOURCES STREQUAL "")
 	message(FATAL_ERROR "No source files in the src directory")
 endif()
 
+set(VENDOR_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/vendor)
+set(VENDOR_BIN_ROOT ${CMAKE_CURRENT_BINARY_DIR}/vendor)
+
 ###############################################################################
 # luajit
 ###############################################################################
@@ -36,9 +39,14 @@ include_directories(${install_dir}/include/luajit-2.0)
 # SDL
 ###############################################################################
 add_subdirectory("vendor/SDL")
-set(SDL_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/vendor/sdl)
+set(SDL_ROOT ${VENDOR_SRC_ROOT}/sdl)
 include_directories(${SDL_ROOT}/include)
-link_directories(${CMAKE_CURRENT_BINARY_DIR}/vendor/sdl)
+link_directories(${VENDOR_BIN_ROOT}/sdl)
+
+###############################################################################
+# GLM
+###############################################################################
+include_directories(${VENDOR_SRC_ROOT}/glm)
 
 ###############################################################################
 # Orc
